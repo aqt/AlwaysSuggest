@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="github.aqt.alwayssuggest"
+          android:versionCode="1"
+          android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="22"/>
+	<application android:label="AlwaysSuggest">
+		<meta-data
+			android:name="xposedmodule"
+			android:value="true" />
+
+		<meta-data
+			android:name="xposeddescription"
+			android:value="Always enable suggestions (for Google Keyboard / Gboard)" />
+
+		<meta-data
+			android:name="xposedminversion"
+			android:value="80" />
+	</application>
+</manifest>
