@@ -26,8 +26,10 @@ public class Main implements IXposedHookLoadPackage {
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					EditorInfo editorInfo = (EditorInfo) param.args[1];
 
-					// Clear URI bit
+					// Clear bits for variations that disable the suggestions bar
+					// This does of course mean that any other code dependent on these variations will not run
 					editorInfo.inputType &= ~InputType.TYPE_TEXT_VARIATION_URI;
+					editorInfo.inputType &= ~InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 
 					switch (editorInfo.inputType & InputType.TYPE_MASK_CLASS) {
 						case InputType.TYPE_CLASS_TEXT:
