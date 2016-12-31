@@ -1,4 +1,6 @@
-# Rules from https://github.com/github/gitignore/blob/master/Android.gitignore
+.idea/*
+
+# Rules below from https://github.com/github/gitignore/blob/master/Android.gitignore
 
 # Built application files
 *.apk
