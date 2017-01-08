@@ -26,19 +26,27 @@ public class Main implements IXposedHookLoadPackage {
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					EditorInfo editorInfo = (EditorInfo) param.args[1];
 
-					// Clear bits for variations that disable the suggestions bar
-					// This does of course mean that any other code dependent on these variations will not run
-					editorInfo.inputType &= ~InputType.TYPE_TEXT_VARIATION_URI;
-					editorInfo.inputType &= ~InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
-
 					switch (editorInfo.inputType & InputType.TYPE_MASK_CLASS) {
 						case InputType.TYPE_CLASS_TEXT:
-							// Clear No suggestions bit (the whole point of this mod)
-							editorInfo.inputType &= ~InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+							modifyTextField(editorInfo);
 							break;
 					}
 				}
 			}
 		);
+	}
+
+	public void modifyTextField(EditorInfo editorInfo) {
+		// Clear No suggestions bit
+		editorInfo.inputType &= ~InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+
+		// Disable variations that do not show the suggestions bar
+		// Of course, this means any code dependent on these variations will not run
+		switch (editorInfo.inputType & InputType.TYPE_MASK_VARIATION) {
+			case InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS:
+			case InputType.TYPE_TEXT_VARIATION_URI:
+				editorInfo.inputType &= ~InputType.TYPE_MASK_VARIATION;
+				break;
+		}
 	}
 }
